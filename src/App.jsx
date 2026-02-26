@@ -1,25 +1,23 @@
-import Testimonials from "./sections/Testimonials";
-import Footer from "./sections/Footer";
-import Contact from "./sections/Contact";
-import TechStack from "./sections/TechStack";
-import Experience from "./sections/Experience";
-import Hero from "./sections/Hero";
-import ShowcaseSection from "./sections/ShowcaseSection";
-import LogoShowcase from "./sections/LogoShowcase";
-import FeatureCards from "./sections/FeatureCards";
+import HeroSection from "./sections/HeroSection";
+import AboutSection from "./sections/AboutSection";
+import ProjectsSection from "./sections/ProjectsSection";
+import ExperienceSection from "./sections/ExperienceSection";
+import SkillsSection from "./sections/SkillsSection";
+import ContactSection from "./sections/ContactSection";
+import ServicesSection from "./sections/ServicesSection";
 import Navbar from "./components/NavBar";
+import Footer from "./sections/Footer";
 
 const App = () => (
   <>
     <Navbar />
-    <Hero />
-    <ShowcaseSection />
-    <LogoShowcase />
-    <FeatureCards />
-    <Experience />
-    <TechStack />
-    <Testimonials />
-    <Contact />
+    <HeroSection />
+    <AboutSection />
+    <ProjectsSection />
+    <ExperienceSection />
+    <SkillsSection />
+    <ServicesSection />
+    <ContactSection />
     <Footer />
   </>
 );

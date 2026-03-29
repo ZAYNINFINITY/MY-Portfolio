@@ -1,19 +1,17 @@
 import React, { useState, useEffect } from "react";
-import HeroSection from "./sections/HeroSection";
-import DevOpsStrip from "./sections/DevOpsStrip";
-import AboutSection from "./sections/AboutSection";
-import ProjectsSection from "./sections/ProjectsSection";
-import ServicesSection from "./sections/ServicesSection";
-import TechStackSection from "./sections/TechStackSection";
-import ExperienceSection from "./sections/ExperienceSection";
-import TestimonialsSection from "./sections/TestimonialsSection";
-import SkillsSection from "./sections/SkillsSection";
-import GitHubSection from "./sections/GitHubSection";
-import LearningSection from "./sections/LearningSection";
-import ContactSection from "./sections/ContactSection";
-import Footer from "./sections/Footer";
-import Navbar from "./components/NavBar";
+import { AnimatePresence } from "framer-motion";
 import LoadingScreen from "./components/LoadingScreen";
+import Navbar from "./components/Navbar";
+import Hero from "./components/Hero";
+import TechStrip from "./components/TechStrip";
+import About from "./components/About";
+import Projects from "./components/Projects";
+import NpmCard from "./components/NpmCard";
+import Skills from "./components/Skills";
+import Experience from "./components/Experience";
+import GitHubStats from "./components/GitHubStats";
+import Contact from "./components/Contact";
+import Footer from "./components/Footer";
 
 const App = () => {
   const [isLoading, setIsLoading] = useState(true);
@@ -21,28 +19,27 @@ const App = () => {
   useEffect(() => {
     const timer = setTimeout(() => {
       setIsLoading(false);
-    }, 1500);
+    }, 2000);
 
     return () => clearTimeout(timer);
   }, []);
 
   return (
     <>
-      <LoadingScreen isVisible={isLoading} />
+      <AnimatePresence>
+        {isLoading && <LoadingScreen key="loading" />}
+      </AnimatePresence>
       <Navbar />
-      <main>
-        <HeroSection />
-        <DevOpsStrip />
-        <AboutSection />
-        <ProjectsSection />
-        <ServicesSection />
-        <TechStackSection />
-        <ExperienceSection />
-        <TestimonialsSection />
-        <SkillsSection />
-        <GitHubSection />
-        <LearningSection />
-        <ContactSection />
+      <main className="scroll-smooth">
+        <Hero />
+        <TechStrip />
+        <About />
+        <Projects />
+        <NpmCard />
+        <Skills />
+        <Experience />
+        <GitHubStats />
+        <Contact />
       </main>
       <Footer />
     </>

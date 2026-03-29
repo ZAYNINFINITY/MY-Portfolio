@@ -1,72 +1,72 @@
-import React from "react";
-import { motion, AnimatePresence } from "framer-motion";
+import { useEffect, useState } from 'react';
+import { motion } from 'framer-motion';
 
-const LoadingScreen = ({ isVisible }) => {
-  const progressVariants = {
-    initial: { width: 0 },
-    animate: { width: "100%", transition: { duration: 1.2, ease: "easeInOut" } },
-  };
+export default function LoadingScreen() {
+  const [displayedText, setDisplayedText] = useState('');
+  const fullText = 'Initializing workspace...';
 
-  const containerVariants = {
-    exit: { opacity: 0, transition: { duration: 0.6 } },
-  };
+  useEffect(() => {
+    let index = 0;
+    const interval = setInterval(() => {
+      if (index < fullText.length) {
+        setDisplayedText(fullText.slice(0, index + 1));
+        index++;
+      }
+    }, 50);
+    return () => clearInterval(interval);
+  }, []);
 
   return (
-    <AnimatePresence>
-      {isVisible && (
+    <motion.div
+      className="fixed inset-0 bg-[#0a0a0f] flex flex-col items-center justify-center z-50"
+      exit={{ opacity: 0 }}
+      transition={{ duration: 0.5 }}
+    >
+      <motion.div
+        className="flex flex-col items-center gap-6"
+        initial={{ opacity: 0, scale: 0.9 }}
+        animate={{ opacity: 1, scale: 1 }}
+        transition={{ duration: 0.4 }}
+      >
+        {/* Logo */}
         <motion.div
-          variants={containerVariants}
-          exit="exit"
-          className="fixed inset-0 bg-black/90 backdrop-blur-sm flex flex-col items-center justify-center z-[9999]"
+          className="w-16 h-16 rounded-full bg-gradient-to-br from-[#6366f1] to-[#4f46e5] flex items-center justify-center"
+          animate={{
+            boxShadow: [
+              '0 0 20px rgba(99, 102, 241, 0.5)',
+              '0 0 40px rgba(99, 102, 241, 0.8)',
+              '0 0 20px rgba(99, 102, 241, 0.5)',
+            ],
+          }}
+          transition={{ duration: 2, repeat: Infinity }}
         >
-          {/* Content */}
-          <motion.div
-            initial={{ opacity: 0, y: -20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6 }}
-            className="text-center"
-          >
-            <h1 className="text-4xl md:text-5xl font-display font-bold text-white mb-8">
-              Zain <span className="text-primary">|</span>{" "}
-              <span className="text-secondary">Full Stack Developer</span>
-            </h1>
-
-            {/* Progress Bar Container */}
-            <div className="w-64 h-1 rounded-full bg-white/10 overflow-hidden">
-              <motion.div
-                variants={progressVariants}
-                initial="initial"
-                animate="animate"
-                className="h-full bg-gradient-to-r from-primary to-secondary rounded-full"
-              />
-            </div>
-
-            {/* Loading Text */}
-            <motion.p
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              transition={{ delay: 0.3 }}
-              className="text-white/60 mt-6 text-sm tracking-widest font-mono"
-            >
-              Loading portfolio...
-            </motion.p>
-          </motion.div>
-
-          {/* Decorative Elements */}
-          <motion.div
-            animate={{ rotate: 360 }}
-            transition={{ duration: 3, repeat: Infinity, ease: "linear" }}
-            className="absolute bottom-16 w-32 h-32 rounded-full border border-primary/20 pointer-events-none"
-          />
-          <motion.div
-            animate={{ rotate: -360 }}
-            transition={{ duration: 4, repeat: Infinity, ease: "linear" }}
-            className="absolute bottom-16 w-48 h-48 rounded-full border border-secondary/10 pointer-events-none"
-          />
+          <span className="text-2xl font-bold text-white">Z</span>
         </motion.div>
-      )}
-    </AnimatePresence>
-  );
-};
 
-export default LoadingScreen;
+        {/* Typewriter Text */}
+        <div className="h-6 flex items-center">
+          <motion.p className="text-[#7c7c8a] text-sm font-mono">
+            {displayedText}
+            <motion.span
+              animate={{ opacity: [1, 0] }}
+              transition={{ duration: 0.6, repeat: Infinity }}
+              className="ml-1"
+            >
+              |
+            </motion.span>
+          </motion.p>
+        </div>
+
+        {/* Loading Bar */}
+        <div className="w-32 h-1 bg-[#1a1a2e] rounded-full overflow-hidden">
+          <motion.div
+            className="h-full bg-gradient-to-r from-[#6366f1] to-[#4f46e5]"
+            initial={{ width: '0%' }}
+            animate={{ width: '100%' }}
+            transition={{ duration: 2, ease: 'easeInOut' }}
+          />
+        </div>
+      </motion.div>
+    </motion.div>
+  );
+}

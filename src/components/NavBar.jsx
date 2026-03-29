@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import { motion } from "framer-motion";
 import { navLinks } from "../constants";
 
 const NavBar = () => {
@@ -86,8 +87,20 @@ const NavBar = () => {
             })}
           </nav>
 
-          {/* CTA Button */}
-          <div className="hidden lg:block">
+          {/* Desktop CTA Buttons */}
+          <div className="hidden lg:flex items-center gap-3">
+            {/* Resume Download Button */}
+            <motion.a
+              href="/resume.pdf"
+              download="Zain_Resume.pdf"
+              whileHover={{ scale: 1.05 }}
+              transition={{ duration: 0.2 }}
+              className="text-sm font-medium px-4 py-2.5 border border-slate-400 text-slate-400 rounded-lg hover:border-white hover:text-white transition-colors"
+            >
+              Resume
+            </motion.a>
+
+            {/* Let's Talk Button */}
             <a
               href="#contact"
               onClick={(e) => {
@@ -142,7 +155,7 @@ const NavBar = () => {
       {/* Mobile Menu */}
       <div
         className={`lg:hidden bg-slate-900/98 backdrop-blur-sm border-t border-slate-800 overflow-hidden transition-all duration-300 ${
-          mobileMenuOpen ? "max-h-80 py-4" : "max-h-0 py-0"
+          mobileMenuOpen ? "max-h-96 py-4" : "max-h-0 py-0"
         }`}
       >
         <div className="container">
@@ -167,6 +180,19 @@ const NavBar = () => {
                 </a>
               );
             })}
+
+            {/* Mobile Resume Button */}
+            <motion.a
+              href="/resume.pdf"
+              download="Zain_Resume.pdf"
+              whileHover={{ scale: 1.02 }}
+              transition={{ duration: 0.2 }}
+              className="text-sm font-medium py-2.5 px-4 border border-slate-400 text-slate-400 rounded-lg hover:border-white hover:text-white transition-colors text-center mt-2"
+            >
+              Download Resume
+            </motion.a>
+
+            {/* Mobile Let's Talk Button */}
             <a
               href="#contact"
               onClick={(e) => {

@@ -1,49 +1,6 @@
 import React, { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-
-const projects = [
-  {
-    id: 1,
-    title: "Car Auction Management System",
-    type: "Full-Stack Architecture",
-    description: "A secure, role-based platform handling real-time bidding logic and comprehensive admin controls.",
-    problem: "Existing auction processes were manual and susceptible to data inconsistencies and security flaws.",
-    solution: "Architected a normalized relational database in MySQL with a custom PHP backend featuring session-based RBAC.",
-    result: "Delivered a scalable platform capable of handling concurrent bids with strict ACID compliance.",
-    image: "/images/project1.png",
-    technologies: ["PHP", "MySQL", "Tailwind CSS", "JavaScript"],
-    githubUrl: "https://github.com/ZAYNINFINITY/CARAUCTION-MANAGEMENT-SYSTEM",
-    architecture: ["MVC Pattern", "RESTful Principles", "Normalized DB Logic"],
-    security: ["Prepared Statements", "Bcrypt Hashing", "Role-Based Access Control"],
-  },
-  {
-    id: 2,
-    title: "Business Management System",
-    type: "Enterprise Web App",
-    description: "Digital transformation suite digitizing operational workflows and data modeling.",
-    problem: "Operational data was siloed in spreadsheets, causing reporting delays and integration issues.",
-    solution: "Engineered a centralized PHP-MySQL application with complete CRUD workflows and automated reporting features.",
-    result: "Streamlined daily operations, reducing manual entry time and providing real-time analytics dashboards.",
-    image: "/images/project2.png",
-    technologies: ["PHP", "MySQL", "JavaScript", "HTML/CSS"],
-    architecture: ["Data-driven Dashboards", "Automated Workflows", "Modular Architecture"],
-    security: ["Input Sanitization", "CSRF Protection"],
-  },
-  {
-    id: 3,
-    title: "Streamer Dash",
-    type: "Interactive Web Game",
-    description: "Browser-based application demonstrating core game loop logic and state management.",
-    problem: "Needed a performant way to handle complex game state without relying on heavy frameworks.",
-    solution: "Implemented vanilla JavaScript with requestAnimationFrame for smooth rendering and modular event listeners.",
-    result: "A highly interactive, responsive game with polished UI behavior and memory-leak-free state handling.",
-    image: "/images/project3.png",
-    technologies: ["HTML5 Canvas", "CSS3 animations", "Vanilla JavaScript"],
-    githubUrl: "https://github.com/ZAYNINFINITY/Streamer-Dash",
-    architecture: ["Game Loop Pattern", "State Machine", "Event-driven Architecture"],
-    security: [],
-  }
-];
+import { projects } from "../constants";
 
 const ProjectCard = ({ project }) => {
   const [isExpanded, setIsExpanded] = useState(false);
@@ -79,14 +36,15 @@ const ProjectCard = ({ project }) => {
 
       {/* Content */}
       <motion.div layout className="p-6">
-        <p className="text-muted text-sm leading-relaxed mb-6">
+        <p className="text-muted text-sm leading-relaxed mb-4">
           {project.description}
         </p>
 
-        <div className="flex flex-wrap gap-2 mb-6">
-          {project.technologies.map((tech, idx) => (
-            <span key={idx} className="bg-surface-hover border border-border text-text-primary px-3 py-1 rounded-md text-xs font-mono">
-              {tech}
+        {/* Tech Tags/Badges */}
+        <div className="flex flex-wrap gap-2 mb-4">
+          {project.tags && project.tags.map((tag, idx) => (
+            <span key={idx} className={`text-xs px-2 py-1 rounded-full bg-white/5 border border-white/10 text-white/70 font-medium`}>
+              {tag.name}
             </span>
           ))}
         </div>
@@ -99,7 +57,7 @@ const ProjectCard = ({ project }) => {
               animate={{ height: "auto", opacity: 1 }}
               exit={{ height: 0, opacity: 0 }}
               transition={{ duration: 0.3 }}
-              className="overflow-hidden border-t border-border pt-4 mt-4"
+              className="overflow-hidden border-t border-border pt-4 mt-4 mb-4"
             >
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6 pb-4">
                 {/* Problem -> Solution -> Result */}
@@ -157,20 +115,35 @@ const ProjectCard = ({ project }) => {
         </AnimatePresence>
 
         {/* Action Bar */}
-        <div className="flex items-center gap-4 mt-2">
+        <div className="flex items-center gap-3 border-t border-border pt-4">
           <button
             onClick={() => setIsExpanded(!isExpanded)}
-            className="text-primary text-sm font-medium hover:text-primary-hover transition-colors flex items-center gap-1 mr-auto"
+            className="text-primary text-sm font-medium hover:text-primary-hover transition-colors flex items-center gap-1"
           >
             {isExpanded ? "Collapse Case Study" : "View Technical Case Study"}
             <motion.span animate={{ rotate: isExpanded ? 180 : 0 }}>↓</motion.span>
           </button>
 
-          {project.githubUrl && (
-            <a href={project.githubUrl} target="_blank" rel="noreferrer" className="text-muted hover:text-white transition-colors">
-              <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path fillRule="evenodd" d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z" clipRule="evenodd" /></svg>
-            </a>
-          )}
+          <div className="ml-auto flex items-center gap-4">
+            {project.githubUrl && project.githubUrl !== "#" && (
+              <a href={project.githubUrl} target="_blank" rel="noopener noreferrer"
+                 className="flex items-center gap-1.5 text-sm text-white/60 hover:text-white transition-colors">
+                <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">
+                  <path fillRule="evenodd" d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z" clipRule="evenodd" />
+                </svg>
+                Code
+              </a>
+            )}
+            {project.live_demo_link && project.live_demo_link !== "#" && (
+              <a href={project.live_demo_link} target="_blank" rel="noopener noreferrer"
+                 className="flex items-center gap-1.5 text-sm text-blue-400 hover:text-blue-300 transition-colors">
+                <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
+                </svg>
+                Live Demo
+              </a>
+            )}
+          </div>
         </div>
       </motion.div>
     </motion.div>

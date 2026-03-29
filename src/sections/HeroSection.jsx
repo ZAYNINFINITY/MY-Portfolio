@@ -1,6 +1,7 @@
 import React from "react";
 import { motion } from "framer-motion";
 import { scrollToSection } from "../utils/scrollHelper";
+import { AVAILABLE_FOR_WORK } from "../constants";
 
 const HeroSection = () => {
   return (
@@ -17,71 +18,76 @@ const HeroSection = () => {
 
       <div className="container relative z-10">
         <div className="max-w-4xl">
-          {/* Status indicator */}
-          <motion.div
-            initial={{ opacity: 0, y: 10 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5 }}
-            className="flex items-center gap-2.5 mb-6"
-          >
-            <span className="w-2.5 h-2.5 bg-secondary rounded-full animate-pulse shadow-[0_0_8px_rgba(16,185,129,0.8)]"></span>
-            <span className="text-sm font-mono text-secondary tracking-wide uppercase">
-              Available for new opportunities
-            </span>
-          </motion.div>
+          {/* Open to Work Badge */}
+          {AVAILABLE_FOR_WORK && (
+            <motion.div
+              initial={{ opacity: 0, y: -10 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.5, delay: 0 }}
+              className="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-green-500/30 bg-green-500/10 text-green-400 text-sm mb-6"
+            >
+              <span className="w-2 h-2 rounded-full bg-green-400 animate-pulse" />
+              <span>Open to full-time & internship roles</span>
+            </motion.div>
+          )}
 
+          {/* Name */}
           <motion.h1
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5, delay: 0.1 }}
+            transition={{ duration: 0.6, delay: 0.1 }}
             className="text-5xl sm:text-6xl md:text-7xl lg:text-8xl font-display font-bold mb-4 tracking-tight text-white"
           >
             Zain Ul Abideen
           </motion.h1>
 
+          {/* Tagline */}
           <motion.p
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5, delay: 0.2 }}
-            className="text-xl md:text-2xl font-semibold text-primary mb-4 max-w-2xl"
+            transition={{ duration: 0.6, delay: 0.2 }}
+            className="text-xl md:text-2xl font-semibold text-primary mb-6 max-w-2xl"
           >
-            Architecting Scalable Backend Systems & Full-Stack Solutions
+            Full Stack Developer crafting production-ready apps with React, Node.js & AI integrations
           </motion.p>
 
+          {/* Description */}
           <motion.p
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5, delay: 0.3 }}
+            transition={{ duration: 0.6, delay: 0.3 }}
             className="text-base md:text-lg text-muted mb-8 max-w-xl leading-relaxed"
           >
             I design and develop production-ready web applications with a focus on relational database architecture, secure APIs, and reliable execution. Passionate about solving complex logic problems and delivering measurable business value.
           </motion.p>
 
+          {/* CTA Buttons */}
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5, delay: 0.4 }}
+            transition={{ duration: 0.6, delay: 0.4 }}
             className="flex flex-wrap gap-4"
           >
             <button
               onClick={() => scrollToSection("projects")}
               className="btn-primary"
             >
-              View System Showcases
+              View My Work
             </button>
-            <button
-              onClick={() => scrollToSection("contact")}
+            <a
+              href="/resume.pdf"
+              download="Zain_Resume.pdf"
               className="btn-secondary"
             >
-              Discuss a Project
-            </button>
+              Download CV
+            </a>
           </motion.div>
 
           {/* Stats as glass cards */}
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5, delay: 0.5 }}
+            transition={{ duration: 0.6, delay: 0.5 }}
             className="flex flex-wrap gap-4 mt-12 pt-8 border-t border-border"
           >
             <div className="px-6 py-4 bg-surface/50 backdrop-blur-md border border-border rounded-xl">
@@ -100,6 +106,7 @@ const HeroSection = () => {
         </div>
       </div>
 
+      {/* Scroll CTA */}
       <motion.div
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}

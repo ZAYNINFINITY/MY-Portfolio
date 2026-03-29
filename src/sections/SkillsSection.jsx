@@ -1,186 +1,158 @@
-import React, { useState } from "react";
+import React from "react";
+import { motion } from "framer-motion";
 
-const skillCategories = [
-  { id: "all", label: "All" },
-  { id: "backend", label: "Backend" },
-  { id: "frontend", label: "Frontend" },
-  { id: "tools", label: "Tools" },
-  { id: "cms", label: "CMS" },
+const skillGroups = [
+  {
+    category: "Frontend",
+    color: "from-blue-500 to-blue-600",
+    borderColor: "border-blue-500/30",
+    bgColor: "bg-blue-500/10",
+    skills: ["React", "Tailwind CSS", "Framer Motion", "JavaScript ES6+", "HTML5", "CSS3"]
+  },
+  {
+    category: "Backend",
+    color: "from-green-500 to-green-600",
+    borderColor: "border-green-500/30",
+    bgColor: "bg-green-500/10",
+    skills: ["Node.js", "Express", "PHP", "Python", "REST APIs", "WebSockets"]
+  },
+  {
+    category: "Database",
+    color: "from-purple-500 to-purple-600",
+    borderColor: "border-purple-500/30",
+    bgColor: "bg-purple-500/10",
+    skills: ["MySQL", "PostgreSQL", "MongoDB", "Redis", "Query Optimization", "Schema Design"]
+  },
+  {
+    category: "DevOps & Deployment",
+    color: "from-orange-500 to-orange-600",
+    borderColor: "border-orange-500/30",
+    bgColor: "bg-orange-500/10",
+    skills: ["Docker", "Vercel", "GitHub Actions", "Git", "CI/CD", "AWS EC2"]
+  },
+  {
+    category: "AI & ML Adjacent",
+    color: "from-pink-500 to-pink-600",
+    borderColor: "border-pink-500/30",
+    bgColor: "bg-pink-500/10",
+    skills: ["LangChain", "OpenAI API", "Prompt Engineering", "Vector DBs", "JSON Validation", "API Integration"]
+  }
 ];
-
-const skills = [
-  // Backend
-  {
-    name: "PHP",
-    category: "backend",
-    level: "Advanced",
-    desc: "Server-side scripting, form handling, backend integration",
-  },
-  {
-    name: "MySQL",
-    category: "backend",
-    level: "Advanced",
-    desc: "Database design, CRUD operations, complex queries",
-  },
-  {
-    name: "Python",
-    category: "backend",
-    level: "Basic",
-    desc: "Basic scripting and automation",
-  },
-  {
-    name: "Node.js",
-    category: "backend",
-    level: "Learning",
-    desc: "Currently learning API development",
-  },
-
-  // Frontend
-  {
-    name: "HTML5",
-    category: "frontend",
-    level: "Advanced",
-    desc: "Semantic markup, accessibility",
-  },
-  {
-    name: "CSS3",
-    category: "frontend",
-    level: "Advanced",
-    desc: "Responsive design, Flexbox, Grid",
-  },
-  {
-    name: "JavaScript",
-    category: "frontend",
-    level: "Intermediate",
-    desc: "DOM manipulation, ES6+, async/await",
-  },
-  {
-    name: "React",
-    category: "frontend",
-    level: "Learning",
-    desc: "Currently learning component-based UI",
-  },
-
-  // Tools
-  {
-    name: "Git & GitHub",
-    category: "tools",
-    level: "Intermediate",
-    desc: "Version control, collaboration",
-  },
-  {
-    name: "VS Code",
-    category: "tools",
-    level: "Advanced",
-    desc: "Code editing, debugging, extensions",
-  },
-  {
-    name: "XAMPP",
-    category: "tools",
-    level: "Advanced",
-    desc: "Local development environment",
-  },
-  {
-    name: "Figma",
-    category: "tools",
-    level: "Basic",
-    desc: "Basic UI/UX design",
-  },
-
-  // CMS
-  {
-    name: "WordPress",
-    category: "cms",
-    level: "Intermediate",
-    desc: "Theme customization, plugins",
-  },
-  {
-    name: "Elementor",
-    category: "cms",
-    level: "Intermediate",
-    desc: "No-code page building",
-  },
-  {
-    name: "WooCommerce",
-    category: "cms",
-    level: "Intermediate",
-    desc: "E-commerce setup and customization",
-  },
-];
-
-const levelColors = {
-  Advanced: "bg-emerald-500/20 text-emerald-400 border-emerald-500/30",
-  Intermediate: "bg-blue-500/20 text-blue-400 border-blue-500/30",
-  Learning: "bg-amber-500/20 text-amber-400 border-amber-500/30",
-  Basic: "bg-slate-500/20 text-slate-400 border-slate-500/30",
-};
 
 const SkillsSection = () => {
-  const [activeFilter, setActiveFilter] = useState("all");
+  const containerVariants = {
+    hidden: { opacity: 0 },
+    visible: {
+      opacity: 1,
+      transition: {
+        staggerChildren: 0.1,
+        delayChildren: 0.2
+      }
+    }
+  };
 
-  const filteredSkills =
-    activeFilter === "all"
-      ? skills
-      : skills.filter((skill) => skill.category === activeFilter);
+  const cardVariants = {
+    hidden: { opacity: 0, y: 20 },
+    visible: {
+      opacity: 1,
+      y: 0,
+      transition: {
+        duration: 0.5,
+        ease: "easeOut"
+      }
+    }
+  };
 
   return (
-    <section id="skills" className="section-block bg-slate-900/50">
+    <section id="skills" className="section-block">
       <div className="container">
-        <div className="text-center mb-10">
-          <h2 className="section-title">Skills & Technologies</h2>
-          <p className="section-subtitle mx-auto">
-            My technical toolkit and expertise levels
+        {/* Header */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          className="max-w-3xl mb-16"
+        >
+          <div className="flex items-center gap-3 mb-4 text-primary font-mono text-sm">
+            <span className="w-8 h-px bg-primary"></span>
+            <span>03. Technical Skills</span>
+          </div>
+          <h2 className="text-3xl md:text-5xl font-display font-bold mb-6 text-white">
+            Technologies & <span className="text-secondary">Proficiency</span>
+          </h2>
+          <p className="text-muted text-lg">
+            Organized by domain — from frontend interactivity to backend architecture and DevOps practices.
           </p>
-        </div>
-
-        {/* Filter Buttons */}
-        <div className="flex flex-wrap justify-center gap-2 mb-10">
-          {skillCategories.map((category) => (
-            <button
-              key={category.id}
-              onClick={() => setActiveFilter(category.id)}
-              className={`px-4 py-2 rounded-lg text-sm font-medium transition-all duration-200 ${
-                activeFilter === category.id
-                  ? "bg-blue-500 text-white shadow-lg shadow-blue-500/25"
-                  : "bg-slate-800 text-slate-400 hover:bg-slate-700 hover:text-white"
-              }`}
-            >
-              {category.label}
-            </button>
-          ))}
-        </div>
+        </motion.div>
 
         {/* Skills Grid */}
-        <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4">
-          {filteredSkills.map((skill, index) => (
-            <div
-              key={skill.name}
-              className="group p-4 rounded-xl bg-slate-800/50 border border-slate-700/50 hover:border-blue-500/30 hover:bg-slate-800 transition-all duration-300 hover:-translate-y-1 animate-fade-in"
-              style={{ animationDelay: `${index * 50}ms` }}
+        <motion.div
+          className="grid lg:grid-cols-2 gap-6"
+          variants={containerVariants}
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, margin: "-100px" }}
+        >
+          {skillGroups.map((group) => (
+            <motion.div
+              key={group.category}
+              variants={cardVariants}
+              className={`relative rounded-2xl p-8 border ${group.borderColor} ${group.bgColor} overflow-hidden group hover:border-opacity-100 transition-all duration-300`}
             >
-              <div className="flex flex-col items-center text-center">
-                <h3 className="text-white font-medium mb-2">{skill.name}</h3>
-                <span
-                  className={`px-2.5 py-1 rounded-full text-xs font-medium border ${levelColors[skill.level]}`}
-                >
-                  {skill.level}
-                </span>
+              {/* Gradient accent */}
+              <div className={`absolute top-0 left-0 w-1 h-full bg-gradient-to-b ${group.color} opacity-0 group-hover:opacity-100 transition-opacity duration-300`}></div>
+
+              {/* Category Label */}
+              <div className="mb-6">
+                <h3 className={`text-xl font-display font-bold text-white mb-2`}>
+                  {group.category}
+                </h3>
+                <div className={`w-12 h-1 rounded-full bg-gradient-to-r ${group.color}`}></div>
               </div>
-              {/* Tooltip */}
-              <div className="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 px-3 py-1.5 bg-slate-800 border border-slate-600 rounded-lg text-xs text-slate-300 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 whitespace-nowrap z-10">
-                {skill.desc}
-                <div className="absolute top-full left-1/2 -translate-x-1/2 -mt-1 border-4 border-transparent border-t-slate-600"></div>
+
+              {/* Skills Pills */}
+              <div className="flex flex-wrap gap-3">
+                {group.skills.map((skill, idx) => (
+                  <motion.span
+                    key={skill}
+                    initial={{ opacity: 0, scale: 0.8 }}
+                    whileInView={{ opacity: 1, scale: 1 }}
+                    transition={{ delay: idx * 0.05 }}
+                    viewport={{ once: true }}
+                    className={`px-4 py-2 rounded-full text-sm font-medium text-white/80 bg-white/5 border border-white/10 hover:bg-white/10 hover:text-white transition-all duration-200`}
+                  >
+                    {skill}
+                  </motion.span>
+                ))}
               </div>
-            </div>
+
+              {/* Proficiency indicator */}
+              <div className="mt-6 pt-4 border-t border-white/10">
+                <p className="text-xs text-white/60">
+                  {group.category === "Frontend" && "🔥 Primary Focus"}
+                  {group.category === "Backend" && "🔥 Primary Focus"}
+                  {group.category === "Database" && "Senior Level"}
+                  {group.category === "DevOps & Deployment" && "Intermediate • Growing"}
+                  {group.category === "AI & ML Adjacent" && "Learning • Actively Exploring"}
+                </p>
+              </div>
+            </motion.div>
           ))}
-        </div>
+        </motion.div>
 
         {/* Learning Note */}
-        <div className="mt-10 text-center">
-          <p className="text-slate-500 text-sm">
-            Always learning • Currently focusing on React & Node.js
+        <motion.div
+          initial={{ opacity: 0 }}
+          whileInView={{ opacity: 1 }}
+          viewport={{ once: true }}
+          transition={{ delay: 0.6 }}
+          className="mt-16 text-center"
+        >
+          <p className="text-white/60 text-sm">
+            <span className="inline-block mr-2">📚</span>
+            Always learning • Experimenting with new technologies weekly • Open to challenging projects
           </p>
-        </div>
+        </motion.div>
       </div>
     </section>
   );

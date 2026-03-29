@@ -1,3 +1,6 @@
+// Career Status
+export const AVAILABLE_FOR_WORK = true;
+
 const navLinks = [
   {
     name: "About",
@@ -23,6 +26,72 @@ const navLinks = [
     name: "Contact",
     link: "#contact",
   },
+];
+
+const projects = [
+  {
+    id: 1,
+    title: "Car Auction Management System",
+    type: "Full-Stack Architecture",
+    description: "Secure role-based auction platform with real-time bidding, session-based RBAC, and normalized MySQL schema handling concurrent transactions — deployed with <100ms response times.",
+    problem: "Existing auction processes were manual and susceptible to data inconsistencies and security flaws.",
+    solution: "Architected a normalized relational database in MySQL with a custom PHP backend featuring session-based RBAC.",
+    result: "Delivered a scalable platform capable of handling concurrent bids with strict ACID compliance.",
+    image: "/images/project1.png",
+    technologies: ["PHP", "MySQL", "Tailwind CSS", "JavaScript"],
+    tags: [
+      { name: "PHP", color: "purple" },
+      { name: "MySQL", color: "blue" },
+      { name: "RBAC", color: "green" },
+      { name: "Real-time", color: "orange" }
+    ],
+    githubUrl: "https://github.com/ZAYNINFINITY/CARAUCTION-MANAGEMENT-SYSTEM",
+    live_demo_link: "#",
+    architecture: ["MVC Pattern", "RESTful Principles", "Normalized DB Logic"],
+    security: ["Prepared Statements", "Bcrypt Hashing", "Role-Based Access Control"],
+  },
+  {
+    id: 2,
+    title: "Business Management System",
+    type: "Enterprise Web App",
+    description: "Centralized CRUD application automating operational workflows with real-time analytics dashboards, data-driven reporting, and modular architecture — reduced manual entry by 60% and improved data integrity.",
+    problem: "Operational data was siloed in spreadsheets, causing reporting delays and integration issues.",
+    solution: "Engineered a centralized PHP-MySQL application with complete CRUD workflows and automated reporting features.",
+    result: "Streamlined daily operations, reducing manual entry time and providing real-time analytics dashboards.",
+    image: "/images/project2.png",
+    technologies: ["PHP", "MySQL", "JavaScript", "HTML/CSS"],
+    tags: [
+      { name: "PHP", color: "purple" },
+      { name: "MySQL", color: "blue" },
+      { name: "Dashboard", color: "pink" },
+      { name: "Analytics", color: "cyan" }
+    ],
+    githubUrl: "#",
+    live_demo_link: "#",
+    architecture: ["Data-driven Dashboards", "Automated Workflows", "Modular Architecture"],
+    security: ["Input Sanitization", "CSRF Protection"],
+  },
+  {
+    id: 3,
+    title: "Streamer Dash",
+    type: "Interactive Web Game",
+    description: "High-performance browser game built with vanilla JS and requestAnimationFrame achieving 60 FPS, complex state machine logic, and polished event-driven architecture — no framework bloat.",
+    problem: "Needed a performant way to handle complex game state without relying on heavy frameworks.",
+    solution: "Implemented vanilla JavaScript with requestAnimationFrame for smooth rendering and modular event listeners.",
+    result: "A highly interactive, responsive game with polished UI behavior and memory-leak-free state handling.",
+    image: "/images/project3.png",
+    technologies: ["HTML5 Canvas", "CSS3 animations", "Vanilla JavaScript"],
+    tags: [
+      { name: "JavaScript", color: "yellow" },
+      { name: "Canvas API", color: "red" },
+      { name: "Game Loop", color: "green" },
+      { name: "60 FPS", color: "blue" }
+    ],
+    githubUrl: "https://github.com/ZAYNINFINITY/Streamer-Dash",
+    live_demo_link: "https://github.com/ZAYNINFINITY/Streamer-Dash",
+    architecture: ["Game Loop Pattern", "State Machine", "Event-driven Architecture"],
+    security: [],
+  }
 ];
 
 const words = [
@@ -200,6 +269,8 @@ const socialImgs = [
 ];
 
 export {
+  navLinks,
+  projects,
   words,
   abilities,
   counterItems,
@@ -209,5 +280,4 @@ export {
   socialImgs,
   techStackIcons,
   techStackImgs,
-  navLinks,
 };

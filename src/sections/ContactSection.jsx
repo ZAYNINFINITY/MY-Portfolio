@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { motion, AnimatePresence } from "framer-motion";
 import emailjs from "@emailjs/browser";
 
 const ContactSection = () => {
@@ -22,6 +23,8 @@ const ContactSection = () => {
 
     if (!formData.name.trim()) {
       newErrors.name = "Name is required";
+    } else if (formData.name.trim().length < 2) {
+      newErrors.name = "Name must be at least 2 characters";
     }
 
     if (!formData.email.trim()) {
@@ -98,6 +101,14 @@ const ContactSection = () => {
         message: "Thank you for your message! I'll get back to you soon.",
       });
       setFormData({ name: "", email: "", message: "" });
+
+      // Auto-dismiss success message after 5 seconds
+      setTimeout(() => {
+        setFormStatus((prev) => ({
+          ...prev,
+          isSuccess: false,
+        }));
+      }, 5000);
     } catch (error) {
       console.error("ContactSection Error:", error);
       setFormStatus({
@@ -106,6 +117,14 @@ const ContactSection = () => {
         isError: true,
         message: error.message || "Failed to send message. Please try again or contact via email.",
       });
+
+      // Auto-dismiss error message after 5 seconds
+      setTimeout(() => {
+        setFormStatus((prev) => ({
+          ...prev,
+          isError: false,
+        }));
+      }, 5000);
     }
   };
 
@@ -121,85 +140,122 @@ const ContactSection = () => {
 
         <div className="grid lg:grid-cols-2 gap-10 max-w-5xl mx-auto">
           {/* Contact Form */}
-          <div className="card-surface p-8">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            className="card-surface p-8"
+          >
             <form onSubmit={handleSubmit} className="space-y-5">
               {/* Name Field */}
-              <div>
+              <motion.div layout>
                 <label
                   htmlFor="name"
                   className="block text-sm font-medium text-slate-300 mb-2"
                 >
                   Your Name
                 </label>
-                <input
+                <motion.input
                   type="text"
                   id="name"
                   name="name"
                   value={formData.name}
                   onChange={handleChange}
+                  whileFocus={{ scale: 1.02 }}
                   className={`w-full px-4 py-3 bg-slate-800 border ${
                     errors.name ? "border-red-500" : "border-slate-700"
                   } rounded-xl text-white focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 transition-colors`}
                   placeholder="John Doe"
                 />
-                {errors.name && (
-                  <p className="text-red-400 text-sm mt-1">{errors.name}</p>
-                )}
-              </div>
+                <AnimatePresence>
+                  {errors.name && (
+                    <motion.p
+                      initial={{ opacity: 0, y: -5 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      exit={{ opacity: 0, y: -5 }}
+                      className="text-red-400 text-sm mt-1"
+                    >
+                      {errors.name}
+                    </motion.p>
+                  )}
+                </AnimatePresence>
+              </motion.div>
 
               {/* Email Field */}
-              <div>
+              <motion.div layout>
                 <label
                   htmlFor="email"
                   className="block text-sm font-medium text-slate-300 mb-2"
                 >
                   Email Address
                 </label>
-                <input
+                <motion.input
                   type="email"
                   id="email"
                   name="email"
                   value={formData.email}
                   onChange={handleChange}
+                  whileFocus={{ scale: 1.02 }}
                   className={`w-full px-4 py-3 bg-slate-800 border ${
                     errors.email ? "border-red-500" : "border-slate-700"
                   } rounded-xl text-white focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 transition-colors`}
                   placeholder="john@example.com"
                 />
-                {errors.email && (
-                  <p className="text-red-400 text-sm mt-1">{errors.email}</p>
-                )}
-              </div>
+                <AnimatePresence>
+                  {errors.email && (
+                    <motion.p
+                      initial={{ opacity: 0, y: -5 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      exit={{ opacity: 0, y: -5 }}
+                      className="text-red-400 text-sm mt-1"
+                    >
+                      {errors.email}
+                    </motion.p>
+                  )}
+                </AnimatePresence>
+              </motion.div>
 
               {/* Message Field */}
-              <div>
+              <motion.div layout>
                 <label
                   htmlFor="message"
                   className="block text-sm font-medium text-slate-300 mb-2"
                 >
                   Your Message
                 </label>
-                <textarea
+                <motion.textarea
                   id="message"
                   name="message"
                   rows={5}
                   value={formData.message}
                   onChange={handleChange}
+                  whileFocus={{ scale: 1.02 }}
                   className={`w-full px-4 py-3 bg-slate-800 border ${
                     errors.message ? "border-red-500" : "border-slate-700"
                   } rounded-xl text-white focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 transition-colors resize-none`}
                   placeholder="Tell me about your project..."
                 />
-                {errors.message && (
-                  <p className="text-red-400 text-sm mt-1">{errors.message}</p>
-                )}
-              </div>
+                <AnimatePresence>
+                  {errors.message && (
+                    <motion.p
+                      initial={{ opacity: 0, y: -5 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      exit={{ opacity: 0, y: -5 }}
+                      className="text-red-400 text-sm mt-1"
+                    >
+                      {errors.message}
+                    </motion.p>
+                  )}
+                </AnimatePresence>
+              </motion.div>
 
               {/* Submit Button */}
-              <button
+              <motion.button
                 type="submit"
                 disabled={formStatus.isSubmitting}
-                className={`w-full py-4 text-white font-semibold rounded-xl transition-all duration-300 ${
+                whileHover={{ scale: formStatus.isSubmitting ? 1 : 1.02 }}
+                whileTap={{ scale: 0.98 }}
+                className={`w-full py-4 text-white font-semibold rounded-xl transition-all duration-300 flex items-center justify-center gap-2 ${
                   formStatus.isSubmitting
                     ? "bg-slate-600 cursor-not-allowed"
                     : "bg-blue-500 hover:bg-blue-400 hover:-translate-y-0.5"
@@ -208,27 +264,60 @@ const ContactSection = () => {
                   boxShadow: formStatus.isSubmitting ? "none" : "0 10px 30px rgba(59, 130, 246, 0.3)"
                 }}
               >
-                {formStatus.isSubmitting ? "Sending..." : "Send Message"}
-              </button>
+                {formStatus.isSubmitting && (
+                  <motion.div
+                    animate={{ rotate: 360 }}
+                    transition={{ duration: 1, repeat: Infinity, ease: "linear" }}
+                    className="w-4 h-4 border-2 border-white/30 border-t-white rounded-full"
+                  />
+                )}
+                <span>{formStatus.isSubmitting ? "Sending..." : "Send Message"}</span>
+              </motion.button>
 
               {/* Success Message */}
-              {formStatus.isSuccess && (
-                <div className="p-4 bg-emerald-500/10 border border-emerald-500/30 rounded-xl animate-fade-in">
-                  <p className="text-emerald-400 text-sm">{formStatus.message}</p>
-                </div>
-              )}
+              <AnimatePresence>
+                {formStatus.isSuccess && (
+                  <motion.div
+                    initial={{ opacity: 0, y: -10 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    exit={{ opacity: 0, y: -10 }}
+                    className="p-4 bg-emerald-500/10 border border-emerald-500/30 rounded-xl flex items-start gap-3"
+                  >
+                    <svg className="w-5 h-5 text-emerald-400 flex-shrink-0 mt-0.5" fill="currentColor" viewBox="0 0 20 20">
+                      <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
+                    </svg>
+                    <p className="text-emerald-400 text-sm">{formStatus.message}</p>
+                  </motion.div>
+                )}
+              </AnimatePresence>
 
               {/* Error Message */}
-              {formStatus.isError && (
-                <div className="p-4 bg-red-500/10 border border-red-500/30 rounded-xl animate-fade-in">
-                  <p className="text-red-400 text-sm">{formStatus.message}</p>
-                </div>
-              )}
+              <AnimatePresence>
+                {formStatus.isError && (
+                  <motion.div
+                    initial={{ opacity: 0, y: -10 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    exit={{ opacity: 0, y: -10 }}
+                    className="p-4 bg-red-500/10 border border-red-500/30 rounded-xl flex items-start gap-3"
+                  >
+                    <svg className="w-5 h-5 text-red-400 flex-shrink-0 mt-0.5" fill="currentColor" viewBox="0 0 20 20">
+                      <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z" clipRule="evenodd" />
+                    </svg>
+                    <p className="text-red-400 text-sm">{formStatus.message}</p>
+                  </motion.div>
+                )}
+              </AnimatePresence>
             </form>
-          </div>
+          </motion.div>
 
           {/* Contact Info */}
-          <div className="space-y-6">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ delay: 0.2 }}
+            className="space-y-6"
+          >
             {/* Direct Contact Cards */}
             <div className="card-surface p-8">
               <h3 className="text-xl font-semibold text-white mb-6">
@@ -240,8 +329,9 @@ const ContactSection = () => {
 
               <div className="space-y-4">
                 {/* Email */}
-                <a
+                <motion.a
                   href="mailto:zaynbu269@gmail.com"
+                  whileHover={{ x: 4 }}
                   className="flex items-center gap-4 p-4 bg-slate-800/50 rounded-xl border border-slate-700 hover:border-blue-500/30 transition-colors group"
                 >
                   <div className="w-12 h-12 bg-blue-500/20 rounded-xl flex items-center justify-center">
@@ -255,13 +345,14 @@ const ContactSection = () => {
                       zaynbu269@gmail.com
                     </p>
                   </div>
-                </a>
+                </motion.a>
 
                 {/* GitHub */}
-                <a
+                <motion.a
                   href="https://github.com/ZAYNINFINITY"
                   target="_blank"
                   rel="noreferrer"
+                  whileHover={{ x: 4 }}
                   className="flex items-center gap-4 p-4 bg-slate-800/50 rounded-xl border border-slate-700 hover:border-blue-500/30 transition-colors group"
                 >
                   <div className="w-12 h-12 bg-slate-700/50 rounded-xl flex items-center justify-center">
@@ -275,13 +366,14 @@ const ContactSection = () => {
                       @ZAYNINFINITY
                     </p>
                   </div>
-                </a>
+                </motion.a>
 
                 {/* LinkedIn */}
-                <a
+                <motion.a
                   href="https://www.linkedin.com/in/zain-ul-abideen-429735231/"
                   target="_blank"
                   rel="noreferrer"
+                  whileHover={{ x: 4 }}
                   className="flex items-center gap-4 p-4 bg-slate-800/50 rounded-xl border border-slate-700 hover:border-blue-500/30 transition-colors group"
                 >
                   <div className="w-12 h-12 bg-blue-700/20 rounded-xl flex items-center justify-center">
@@ -295,14 +387,24 @@ const ContactSection = () => {
                       Zain Ul Abideen
                     </p>
                   </div>
-                </a>
+                </motion.a>
               </div>
             </div>
 
             {/* Availability Note */}
-            <div className="card-surface p-6">
+            <motion.div
+              initial={{ opacity: 0, scale: 0.95 }}
+              whileInView={{ opacity: 1, scale: 1 }}
+              viewport={{ once: true }}
+              transition={{ delay: 0.3 }}
+              className="card-surface p-6"
+            >
               <div className="flex items-center gap-3">
-                <span className="w-3 h-3 bg-emerald-400 rounded-full animate-pulse"></span>
+                <motion.span
+                  animate={{ scale: [1, 1.2, 1] }}
+                  transition={{ duration: 2, repeat: Infinity }}
+                  className="w-3 h-3 bg-emerald-400 rounded-full"
+                ></motion.span>
                 <p className="text-slate-300 font-medium">
                   Available for opportunities
                 </p>
@@ -310,8 +412,8 @@ const ContactSection = () => {
               <p className="text-slate-500 text-sm mt-2">
                 I'm currently looking for internship or entry-level opportunities in web development.
               </p>
-            </div>
-          </div>
+            </motion.div>
+          </motion.div>
         </div>
       </div>
     </section>

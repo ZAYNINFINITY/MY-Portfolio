@@ -1,25 +1,35 @@
 import HeroSection from "./sections/HeroSection";
 import AboutSection from "./sections/AboutSection";
 import ProjectsSection from "./sections/ProjectsSection";
-import ExperienceSection from "./sections/ExperienceSection";
-import SkillsSection from "./sections/SkillsSection";
-import ContactSection from "./sections/ContactSection";
 import ServicesSection from "./sections/ServicesSection";
-import Navbar from "./components/NavBar";
+import TechStackSection from "./sections/TechStackSection";
+import ExperienceSection from "./sections/ExperienceSection";
+import TestimonialsSection from "./sections/TestimonialsSection";
+import SkillsSection from "./sections/SkillsSection";
+import LearningSection from "./sections/LearningSection";
+import ContactSection from "./sections/ContactSection";
 import Footer from "./sections/Footer";
+import Navbar from "./components/NavBar";
 
-const App = () => (
-  <>
-    <Navbar />
-    <HeroSection />
-    <AboutSection />
-    <ProjectsSection />
-    <ExperienceSection />
-    <SkillsSection />
-    <ServicesSection />
-    <ContactSection />
-    <Footer />
-  </>
-);
+const App = () => {
+  return (
+    <>
+      <Navbar />
+      <main>
+        <HeroSection />
+        <AboutSection />
+        <ProjectsSection />
+        <ServicesSection />
+        <TechStackSection />
+        <ExperienceSection />
+        <TestimonialsSection />
+        <SkillsSection />
+        <LearningSection />
+        <ContactSection />
+      </main>
+      <Footer />
+    </>
+  );
+};
 
 export default App;

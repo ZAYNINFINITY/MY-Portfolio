@@ -11,7 +11,6 @@ const NavBar = () => {
       const isScrolled = window.scrollY > 10;
       setScrolled(isScrolled);
 
-      // Update active section based on scroll position
       const sections = navLinks.map((link) => link.link.substring(1));
       const scrollPosition = window.scrollY + 100;
 
@@ -31,13 +30,10 @@ const NavBar = () => {
   const scrollToSection = (sectionId) => {
     const element = document.getElementById(sectionId);
     if (element) {
-      const offsetTop = element.offsetTop - 80; // Account for navbar height
-      window.scrollTo({
-        top: offsetTop,
-        behavior: "smooth",
-      });
+      const offsetTop = element.offsetTop - 80;
+      window.scrollTo({ top: offsetTop, behavior: "smooth" });
     }
-    setMobileMenuOpen(false); // Close mobile menu after navigation
+    setMobileMenuOpen(false);
   };
 
   const toggleMobileMenu = () => {
@@ -48,111 +44,142 @@ const NavBar = () => {
     <header
       className={`fixed top-0 left-0 w-full z-50 transition-all duration-300 ${
         scrolled
-          ? "bg-slate-950/90 backdrop-blur border-b border-slate-800"
+          ? "bg-slate-900/95 backdrop-blur-sm border-b border-slate-800"
           : "bg-transparent"
       }`}
     >
-      <div className="max-w-6xl mx-auto px-5 md:px-8 py-4 flex items-center justify-between">
-        <a
-          href="#hero"
-          className="text-white font-semibold text-xl tracking-wide"
-          onClick={(e) => {
-            e.preventDefault();
-            scrollToSection("hero");
-          }}
-        >
-          Zayn
-        </a>
+      <div className="container">
+        <div className="flex items-center justify-between h-20">
+          {/* Logo */}
+          <a
+            href="#hero"
+            className="text-xl font-bold text-white hover:text-blue-400 transition-colors"
+            onClick={(e) => {
+              e.preventDefault();
+              scrollToSection("hero");
+            }}
+          >
+            Zain<span className="text-blue-500">.</span>
+          </a>
 
-        <nav className="hidden lg:block">
-          <ul className="flex items-center gap-7">
+          {/* Desktop Navigation */}
+          <nav className="hidden lg:flex items-center gap-8">
             {navLinks.map(({ link, name }) => {
               const sectionId = link.substring(1);
               return (
-                <li key={name}>
-                  <a
-                    href={link}
-                    onClick={(e) => {
-                      e.preventDefault();
-                      scrollToSection(sectionId);
-                    }}
-                    className={`text-sm transition-colors ${
-                      activeSection === sectionId
-                        ? "text-cyan-300"
-                        : "text-slate-300 hover:text-white"
-                    }`}
-                  >
-                    {name}
-                  </a>
-                </li>
-              );
-            })}
-          </ul>
-        </nav>
-
-        <button
-          className="lg:hidden border border-slate-700 text-slate-200 rounded-md px-3 py-2 text-xs"
-          onClick={toggleMobileMenu}
-          aria-label="Toggle mobile menu"
-        >
-          Menu
-        </button>
-
-        <a
-          href="#contact"
-          className="hidden lg:inline-flex px-4 py-2 rounded-md bg-cyan-500 text-slate-950 text-sm font-semibold hover:bg-cyan-400 transition-colors"
-          onClick={(e) => {
-            e.preventDefault();
-            scrollToSection("contact");
-          }}
-        >
-          Contact
-        </a>
-      </div>
-
-      <nav
-        className={`lg:hidden border-t border-slate-800 bg-slate-950/95 backdrop-blur px-5 overflow-hidden transition-all duration-300 ${
-          mobileMenuOpen ? "max-h-80 py-3" : "max-h-0 py-0"
-        }`}
-      >
-        <ul className="space-y-3">
-          {navLinks.map(({ link, name }) => {
-            const sectionId = link.substring(1);
-            return (
-              <li key={name}>
                 <a
+                  key={name}
                   href={link}
                   onClick={(e) => {
                     e.preventDefault();
                     scrollToSection(sectionId);
                   }}
-                  className={`block text-sm ${
+                  className={`text-sm font-medium transition-colors ${
                     activeSection === sectionId
-                      ? "text-cyan-300"
-                      : "text-slate-300"
+                      ? "text-blue-400"
+                      : "text-slate-400 hover:text-white"
                   }`}
                 >
                   {name}
                 </a>
-              </li>
-            );
-          })}
-          <li>
+              );
+            })}
+          </nav>
+
+          {/* CTA Button */}
+          <div className="hidden lg:block">
             <a
               href="#contact"
               onClick={(e) => {
                 e.preventDefault();
                 scrollToSection("contact");
               }}
-              className={`block text-sm ${
-                activeSection === "contact" ? "text-cyan-300" : "text-slate-300"
-              }`}
+              className="btn-primary text-sm py-2.5 px-5"
             >
-              Contact
+              Let's Talk
             </a>
-          </li>
-        </ul>
-      </nav>
+          </div>
+
+          {/* Mobile Menu Button */}
+          <button
+            className="lg:hidden p-2 text-slate-400 hover:text-white transition-colors"
+            onClick={toggleMobileMenu}
+            aria-label="Toggle menu"
+          >
+            {mobileMenuOpen ? (
+              <svg
+                className="w-6 h-6"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={2}
+                  d="M6 18L18 6M6 6l12 12"
+                />
+              </svg>
+            ) : (
+              <svg
+                className="w-6 h-6"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={2}
+                  d="M4 6h16M4 12h16M4 18h16"
+                />
+              </svg>
+            )}
+          </button>
+        </div>
+      </div>
+
+      {/* Mobile Menu */}
+      <div
+        className={`lg:hidden bg-slate-900/98 backdrop-blur-sm border-t border-slate-800 overflow-hidden transition-all duration-300 ${
+          mobileMenuOpen ? "max-h-80 py-4" : "max-h-0 py-0"
+        }`}
+      >
+        <div className="container">
+          <nav className="flex flex-col gap-4">
+            {navLinks.map(({ link, name }) => {
+              const sectionId = link.substring(1);
+              return (
+                <a
+                  key={name}
+                  href={link}
+                  onClick={(e) => {
+                    e.preventDefault();
+                    scrollToSection(sectionId);
+                  }}
+                  className={`text-sm font-medium py-2 ${
+                    activeSection === sectionId
+                      ? "text-blue-400"
+                      : "text-slate-400"
+                  }`}
+                >
+                  {name}
+                </a>
+              );
+            })}
+            <a
+              href="#contact"
+              onClick={(e) => {
+                e.preventDefault();
+                scrollToSection("contact");
+              }}
+              className="btn-primary text-sm text-center mt-2"
+            >
+              Let's Talk
+            </a>
+          </nav>
+        </div>
+      </div>
     </header>
   );
 };
